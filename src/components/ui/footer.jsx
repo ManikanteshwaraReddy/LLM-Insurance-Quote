@@ -8,7 +8,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
             <h3 className="md:text-lg font-semibold text-gray-900 mb-2 md:mb-4 dark:text-white">
-              LLM-Insurance Quote
+              SmartHealthQuote
             </h3>
             <p className="text-sm md:text-xl text-gray-600 dark:text-gray-400">
               Get insurance quotes tailored to your health history, instantly!
@@ -73,7 +73,7 @@ const Footer = () => {
         </div>
         <div className="mt-4 pt-4 md:mt-8 md:pt-4 border-t border-gray-200 dark:border-gray-800">
           <p className="text-sm md:text-lg text-gray-600 text-center dark:text-gray-400">
-            Copyrights © 2024 LLM-Insurance Quote. All rights reserved.
+            Copyrights © SmartHealthQuote. All rights reserved.
           </p>
         </div>
       </div>
