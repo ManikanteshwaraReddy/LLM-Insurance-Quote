@@ -37,7 +37,7 @@ const PrivacyPolicy = () => {
               1. Introduction
             </h2>
             <p className="text-gray-700 mb-3 dark:text-gray-300">
-              Welcome to LLM-Insurance Quote. We respect your privacy and are
+              Welcome to SmartHealthQuote. We respect your privacy and are
               committed to protecting your personal data. This privacy policy
               will inform you about how we look after your personal data when
               you visit our website and tell you about your privacy rights and
@@ -45,7 +45,7 @@ const PrivacyPolicy = () => {
             </p>
             <p className="text-gray-700 dark:text-gray-300">
               This privacy policy aims to give you information on how
-              LLM-Insurance Quote collects and processes your personal data
+              SmartHealthQuote collects and processes your personal data
               through your use of this website, including any data you may
               provide through this website when you sign up for our service, use
               our chat interface, or request an insurance quote.

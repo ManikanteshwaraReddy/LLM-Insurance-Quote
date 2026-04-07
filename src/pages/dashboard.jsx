@@ -21,8 +21,7 @@ const Dashboard = () => {
                 <NavLink to="/chat">
                   <Button
                     size="lg"
-                    className="bg-green-600 hover:bg-green-700 text-white rounded-full px-8 py-6 text-lg font-medium"
-                    style={{cursor:'pointer'}}
+                    className="cursor-pointer bg-green-600 hover:bg-green-700 text-white rounded-full px-8 py-6 text-lg font-medium"
                   >
                     Start Chat <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
@@ -92,7 +91,7 @@ const Dashboard = () => {
 
           <div className="mt-16 text-center">
             <NavLink to="/providers">
-              <Button variant="outline" className="rounded-full border-blue-300 text-blue-700 hover:bg-blue-50" style={{cursor:'pointer'}}>
+              <Button variant="outline" className="cursor-pointer rounded-full border-blue-300 text-blue-700 hover:bg-blue-50">
                 View Insurance Providers
               </Button>
             </NavLink>

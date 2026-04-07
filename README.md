@@ -1,6 +1,6 @@
 # SmartHealthQuote
 
-![LLM-Insurance Quote](https://insurance-quotation.vercel.app/logo.svg)
+![SmartHealthQuote](https://insurance-quotation.vercel.app/logo.svg)
 
 A modern, AI-powered platform that provides personalized insurance quotes based on users' health history and needs through an interactive chat interface.
 

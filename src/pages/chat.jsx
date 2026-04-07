@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
 import { Send, Download, Bot, User } from "lucide-react";
 import { Card } from "@/components/ui/card";
-import { NavLink } from "react-router";
+import { NavLink } from "react-router-dom";
 
 const ChatPage = () => {
   const { register, handleSubmit, reset } = useForm();

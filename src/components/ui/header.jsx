@@ -21,7 +21,7 @@ export default function Header() {
             <img src="/logo.svg" alt="Logo" className="h-10 md:h-16 md:w-16" />
             <NavLink to="/" className="flex items-center">
               <span className="font-bold text-blue-700 dark:text-blue-400 md:text-2xl">
-                LLM-Insurance Quote
+                SmartHealthQuote
               </span>
             </NavLink>
           </div>

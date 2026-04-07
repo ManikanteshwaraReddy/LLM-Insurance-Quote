@@ -7,7 +7,7 @@ const PrintQuote = () => {
   useEffect(() => {
     window.print();
     navigate('/');
-  }, [])
+  }, [navigate])
   
   return (
     <div>

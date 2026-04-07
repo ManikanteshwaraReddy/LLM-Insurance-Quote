@@ -36,12 +36,12 @@ const TermsOfService = () => {
               1. Introduction
             </h2>
             <p className="text-gray-700 mb-3 dark:text-gray-300">
-              Welcome to LLM-Insurance Quote. These terms and conditions outline
+              Welcome to SmartHealthQuote. These terms and conditions outline
               the rules and regulations for the use of our website and services.
             </p>
             <p className="text-gray-700 dark:text-gray-300">
               By accessing this website, we assume you accept these terms and
-              conditions in full. Do not continue to use LLM-Insurance Quote if
+              conditions in full. Do not continue to use SmartHealthQuote if
               you do not accept all of the terms and conditions stated on this
               page.
             </p>
@@ -52,7 +52,7 @@ const TermsOfService = () => {
               2. License to Use
             </h2>
             <p className="text-gray-700 mb-3 dark:text-gray-300">
-              Unless otherwise stated, LLM-Insurance Quote and/or its licensors
+              Unless otherwise stated, SmartHealthQuote and/or its licensors
               own the intellectual property rights for all material on this
               website. All intellectual property rights are reserved.
             </p>
@@ -69,7 +69,7 @@ const TermsOfService = () => {
               <li>Sell, rent, or sub-license material from this website</li>
               <li>Reproduce, duplicate, or copy material from this website</li>
               <li>
-                Redistribute content from LLM-Insurance Quote (unless content is
+                Redistribute content from SmartHealthQuote (unless content is
                 specifically made for redistribution)
               </li>
             </ul>
@@ -145,7 +145,7 @@ const TermsOfService = () => {
               6. Limitation of Liability
             </h2>
             <p className="text-gray-700 mb-3 dark:text-gray-300">
-              In no event shall LLM-Insurance Quote, nor its directors,
+              In no event shall SmartHealthQuote, nor its directors,
               employees, partners, agents, suppliers, or affiliates, be liable
               for any indirect, incidental, special, consequential or punitive
               damages, including without limitation, loss of profits, data, use,
@@ -180,7 +180,7 @@ const TermsOfService = () => {
               non-infringement, or course of performance.
             </p>
             <p className="text-gray-700 dark:text-gray-300">
-              LLM-Insurance Quote, its subsidiaries, affiliates, and its
+              SmartHealthQuote, its subsidiaries, affiliates, and its
               licensors do not warrant that:
             </p>
             <ul className="list-disc pl-6 space-y-2 text-gray-700 dark:text-gray-300">

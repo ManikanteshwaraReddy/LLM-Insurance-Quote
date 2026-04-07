@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 
-export default function AuthPage() {
+const AuthPage = () => {
   const [isLogin, setIsLogin] = useState(true);
   const navigate = useNavigate();
 
@@ -100,4 +100,6 @@ export default function AuthPage() {
       </Card>
     </div>
   );
-}
+};
+
+export default AuthPage;
