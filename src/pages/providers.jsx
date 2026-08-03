@@ -15,10 +15,10 @@ const Providers = () => {
   return (
     <div className="container mx-auto max-w-7xl px-4 py-12">
       <div className="text-center mb-12">
-        <h1 className="text-3xl font-bold text-blue-900 mb-4 dark:text-blue-400">
+        <h1 className="text-3xl font-bold text-primary mb-4">
           Insurance Providers Directory
         </h1>
-        <p className="text-lg text-gray-600 max-w-2xl mx-auto dark:text-gray-400">
+        <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
           Browse our network of trusted insurance providers. Use your
           personalized quote to negotiate better rates.
         </p>
@@ -28,18 +28,18 @@ const Providers = () => {
         {providers.map((provider) => (
           <Card
             key={provider.id}
-            className="border-gray-200 hover:shadow-md transition-shadow dark:border-gray-800"
+            className="border-border hover:shadow-md transition-shadow"
           >
             <CardHeader className="pb-2">
               <div className="h-16 flex items-center justify-center mb-2">
-              <provider.icon className="w-10 h-10 text-blue-600" />
+                <provider.icon className="w-10 h-10 text-secondary" />
               </div>
-              <CardTitle className="text-xl text-blue-900 dark:text-blue-400">
+              <CardTitle className="text-xl text-primary">
                 {provider.title}
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <CardDescription className="text-gray-700 min-h-[80px] dark:text-gray-300">
+              <CardDescription className="text-muted-foreground min-h-[80px]">
                 {provider.description}
               </CardDescription>
             </CardContent>
@@ -52,7 +52,7 @@ const Providers = () => {
               >
                 <Button
                   variant="outline"
-                  className="w-full sm:w-auto border-blue-300 text-blue-700 hover:bg-blue-50 dark:border-blue-800 dark:text-blue-400 dark:hover:bg-blue-950"
+                  className="w-full sm:w-auto border-border text-foreground hover:bg-muted"
                 >
                   <ExternalLink className="mr-2 h-4 w-4" />
                   Visit Website
