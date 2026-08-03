@@ -1,69 +1,85 @@
-import React from "react";
-import { NavLink } from "react-router";
+import { NavLink } from "react-router-dom";
+
+const linkClass =
+  "text-small text-text-secondary transition-colors duration-150 ease-out hover:text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus rounded-sm";
 
 const Footer = () => {
   return (
-    <footer className="bg-muted/30 border-t border-border pt-8 pb-4">
-      <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div>
-            <h3 className="md:text-lg font-semibold text-foreground mb-2 md:mb-4">
-              SmartHealthQuote
-            </h3>
-            <p className="text-sm md:text-xl text-muted-foreground">
-              Get insurance quotes tailored to your health history, instantly!
+    <footer className="border-t border-border bg-card">
+      <div className="container mx-auto max-w-5xl px-4 py-10 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-12">
+          {/* Brand Col */}
+          <div className="md:col-span-5 space-y-2">
+            <div className="flex items-center gap-2.5">
+              <img
+                src="/logo.svg"
+                alt="SmartHealthQuote Logo"
+                className="h-7 w-7 object-contain"
+              />
+              <span className="text-h3 font-bold tracking-tight text-text-primary">
+                SmartHealthQuote
+              </span>
+            </div>
+            <p className="max-w-sm text-small text-text-secondary leading-relaxed">
+              Health insurance policy estimation and carrier comparison tool.
             </p>
           </div>
-          <div className="grid grid-cols-2 gap-4 col-span-1 md:col-span-2">
+
+          {/* Links Grid */}
+          <div className="grid grid-cols-2 gap-8 md:col-span-7 sm:grid-cols-3">
             <div>
-              <h3 className="md:text-lg font-semibold text-foreground mb-2 md:mb-4">
-                Quick Links
-              </h3>
+              <h4 className="mb-2 text-caption text-text-tertiary font-semibold uppercase tracking-wider">
+                Product
+              </h4>
               <ul className="space-y-2">
                 <li>
-                  <NavLink
-                    to="/"
-                    className="text-sm md:text-base text-muted-foreground hover:text-primary transition-colors"
-                  >
+                  <NavLink to="/" className={linkClass}>
                     Home
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink
-                    to="/chat"
-                    className="text-sm md:text-base text-muted-foreground hover:text-primary transition-colors"
-                  >
+                  <NavLink to="/chat" className={linkClass}>
                     Get a Quote
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink
-                    to="/providers"
-                    className="text-sm md:text-base text-muted-foreground hover:text-primary transition-colors"
-                  >
-                    Insurance Providers
+                  <NavLink to="/providers" className={linkClass}>
+                    Carriers
                   </NavLink>
                 </li>
               </ul>
             </div>
+
             <div>
-              <h3 className="md:text-lg font-semibold text-foreground mb-2 md:mb-4">
-                Legal
-              </h3>
+              <h4 className="mb-2 text-caption text-text-tertiary font-semibold uppercase tracking-wider">
+                Account
+              </h4>
               <ul className="space-y-2">
                 <li>
-                  <NavLink
-                    to="/privacy-policy"
-                    className="text-sm md:text-base text-muted-foreground hover:text-primary transition-colors"
-                  >
+                  <NavLink to="/auth" className={linkClass}>
+                    Sign In
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/profile" className={linkClass}>
+                    Profile
+                  </NavLink>
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="mb-2 text-caption text-text-tertiary font-semibold uppercase tracking-wider">
+                Legal
+              </h4>
+              <ul className="space-y-2">
+                <li>
+                  <NavLink to="/privacy-policy" className={linkClass}>
                     Privacy Policy
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink
-                    to="/terms-of-service"
-                    className="text-sm md:text-base text-muted-foreground hover:text-primary transition-colors"
-                  >
+                  <NavLink to="/terms-of-service" className={linkClass}>
                     Terms of Service
                   </NavLink>
                 </li>
@@ -71,9 +87,10 @@ const Footer = () => {
             </div>
           </div>
         </div>
-        <div className="mt-4 pt-4 md:mt-8 md:pt-4 border-t border-border">
-          <p className="text-sm md:text-lg text-muted-foreground text-center">
-            Copyrights © SmartHealthQuote. All rights reserved.
+
+        <div className="mt-8 border-t border-border/60 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p className="text-caption text-text-tertiary">
+            © {new Date().getFullYear()} SmartHealthQuote. All rights reserved.
           </p>
         </div>
       </div>

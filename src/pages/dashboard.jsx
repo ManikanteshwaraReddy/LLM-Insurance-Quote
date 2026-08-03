@@ -1,105 +1,147 @@
-import React from 'react'
-import { NavLink } from 'react-router'
-import { Button } from "@/components/ui/button"
-import { ArrowRight, Shield, Clock, MessageSquare } from "lucide-react"
+import { NavLink } from "react-router-dom";
+import { ArrowRight, Clock, MessageSquare, ShieldCheck } from "lucide-react";
+import { Button } from "@/components/ui/button";
+
+const STEPS = [
+  {
+    step: "1",
+    title: "Answer Health Questions",
+    description: "Provide details about your age, health history, lifestyle, and coverage preferences through a guided questionnaire.",
+  },
+  {
+    step: "2",
+    title: "Calculate Estimated Premiums",
+    description: "Our system evaluates your health inputs and computes customized policy estimates across available coverage tiers.",
+  },
+  {
+    step: "3",
+    title: "Compare & Connect",
+    description: "Review your policy breakdown, choose a payment schedule, and connect with registered insurance providers.",
+  },
+];
+
+const CARRIERS = [
+  { name: "HDFC ERGO Health", category: "Comprehensive & Super Top-up" },
+  { name: "Star Health Insurance", category: "Family Floater & Senior Care" },
+  { name: "Care Health Insurance", category: "Critical Illness & Global Care" },
+  { name: "Niva Bupa Health", category: "Individual & Maternity Cover" },
+];
 
 const Dashboard = () => {
   return (
-    <div className="flex flex-col min-h-screen select-none">
-      <section className="bg-gradient-to-b from-blue-50 to-white py-20 px-4 md:px-6 lg:px-8 border-b ">
-        <div className="container mx-auto max-w-6xl">
-          <div className="flex flex-col md:flex-row items-center gap-12">
-            <div className="flex-1 space-y-6">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-blue-900 leading-tight">
-                Get insurance quotes tailored to your health history, instantly!
+    <div className="w-full bg-background">
+      {/* ── Hero Section ─────────────────────────────────────────────────── */}
+      <section className="border-b border-border bg-card py-16 md:py-24">
+        <div className="container mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+          <div className="grid items-center gap-10 md:grid-cols-2">
+            <div className="space-y-6">
+              <h1 className="text-display font-bold text-text-primary tracking-tight">
+                Calculate health insurance quotes based on your health history.
               </h1>
-              <p className="text-lg md:text-xl text-blue-700 max-w-2xl">
-                Our AI-powered platform analyzes your unique health profile to find the perfect insurance coverage for
-                your needs.
+
+              <p className="text-body-large text-text-secondary leading-relaxed">
+                Complete a brief health assessment to receive personalized policy estimates and compare coverage options from leading insurance carriers.
               </p>
-              <div className="pt-4">
+
+              <div className="flex flex-wrap items-center gap-4 pt-2">
                 <NavLink to="/chat">
-                  <Button
-                    size="lg"
-                    className="cursor-pointer bg-green-600 hover:bg-green-700 text-white rounded-full px-8 py-6 text-lg font-medium"
-                  >
-                    Start Chat <ArrowRight className="ml-2 h-5 w-5" />
+                  <Button size="lg" className="gap-2 font-semibold text-white">
+                    <span className="text-white">Start Health Assessment</span>
+                    <ArrowRight className="h-4 w-4 text-white" aria-hidden="true" />
+                  </Button>
+                </NavLink>
+
+                <NavLink to="/providers">
+                  <Button size="lg" variant="outline">
+                    Browse Insurance Providers
                   </Button>
                 </NavLink>
               </div>
 
-              <div className="flex flex-wrap gap-6 pt-8">
-                <div className="flex items-center gap-2">
-                  <Shield className="h-5 w-5 text-green-600" />
-                  <span className="text-gray-700">Secure & Confidential</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Clock className="h-5 w-5 text-green-600" />
-                  <span className="text-gray-700">Quick 5-Minute Process</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <MessageSquare className="h-5 w-5 text-green-600" />
-                  <span className="text-gray-700">Personalized Recommendations</span>
-                </div>
+              <div className="pt-2 flex flex-wrap items-center gap-6 text-caption text-text-tertiary">
+                <span className="flex items-center gap-1.5">
+                  <ShieldCheck className="h-4 w-4 text-text-secondary" /> Confidential & Private
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <Clock className="h-4 w-4 text-text-secondary" /> 5-Minute Guided Process
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <MessageSquare className="h-4 w-4 text-text-secondary" /> Direct Policy Estimates
+                </span>
               </div>
             </div>
-            <div className="hidden flex-1 justify-center md:block">
-              <div className="relative w-full max-w-md">
-                <div className="absolute -z-10 w-72 h-72 bg-blue-100 rounded-full blur-3xl opacity-70 top-0 -right-10"></div>
-                <div className="absolute -z-10 w-72 h-72 bg-green-100 rounded-full blur-3xl opacity-70 -bottom-10 -left-10"></div>
-                <img
-                  src="/landing-image.png?height=400&width=400"
-                  alt="Insurance Illustration"
-                  className="w-full h-auto relative z-10"
-                />
-              </div>
+
+            <div className="flex justify-center md:justify-end">
+              <img
+                src="/landing-image.png"
+                alt="Health insurance illustration"
+                className="h-auto w-full max-w-md object-contain"
+              />
             </div>
           </div>
         </div>
       </section>
 
-      <section className="py-20 px-4 md:px-6 lg:px-8 bg-white">
-        <div className="container mx-auto max-w-6xl">
-          <h2 className="text-3xl font-bold text-center text-blue-900 mb-16">How It Works</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-            <div className="bg-blue-50 rounded-xl p-8 text-center shadow-sm hover:shadow-md transition-shadow">
-              <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
-                <MessageSquare className="h-8 w-8 text-blue-700" />
-              </div>
-              <h3 className="text-xl font-semibold text-blue-900 mb-3">Chat with our AI</h3>
-              <p className="text-gray-700">Answer simple questions about your health history and insurance needs.</p>
-            </div>
-
-            <div className="bg-green-50 rounded-xl p-8 text-center shadow-sm hover:shadow-md transition-shadow">
-              <div className="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Shield className="h-8 w-8 text-green-700" />
-              </div>
-              <h3 className="text-xl font-semibold text-green-900 mb-3">Get Personalized Quotes</h3>
-              <p className="text-gray-700">Receive tailored insurance quotes based on your unique profile.</p>
-            </div>
-
-            <div className="bg-blue-50 rounded-xl p-8 text-center shadow-sm hover:shadow-md transition-shadow">
-              <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
-                <ArrowRight className="h-8 w-8 text-blue-700" />
-              </div>
-              <h3 className="text-xl font-semibold text-blue-900 mb-3">Connect with Providers</h3>
-              <p className="text-gray-700">
-                Use your quote to negotiate with insurance brokers or contact providers directly.
-              </p>
-            </div>
+      {/* ── How It Works ─────────────────────────────────────────────────── */}
+      <section className="py-16 md:py-20 border-b border-border">
+        <div className="container mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+          <div className="mb-12 text-center">
+            <h2 className="text-h1 font-bold text-text-primary tracking-tight">How It Works</h2>
+            <p className="mt-1 text-body text-text-secondary">
+              Three straightforward steps to estimate and compare your health coverage.
+            </p>
           </div>
 
-          <div className="mt-16 text-center">
-            <NavLink to="/providers">
-              <Button variant="outline" className="cursor-pointer rounded-full border-blue-300 text-blue-700 hover:bg-blue-50">
-                View Insurance Providers
+          <div className="grid gap-8 md:grid-cols-3">
+            {STEPS.map((s) => (
+              <div key={s.step} className="rounded-xl border border-border/80 bg-card p-6">
+                <span className="inline-block text-label font-bold text-text-tertiary mb-2">Step {s.step}</span>
+                <h3 className="text-h3 font-semibold text-text-primary mb-2">{s.title}</h3>
+                <p className="text-small text-text-secondary leading-relaxed">{s.description}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-10 text-center">
+            <NavLink to="/chat">
+              <Button className="gap-2">
+                <span>Begin Assessment</span>
+                <ArrowRight className="h-4 w-4" />
               </Button>
             </NavLink>
           </div>
         </div>
       </section>
-    </div>
-  )
-}
 
-export default Dashboard
+      {/* ── Insurance Carriers Overview ────────────────────────────────────── */}
+      <section className="py-16 bg-card">
+        <div className="container mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4">
+            <div>
+              <h2 className="text-h2 font-bold text-text-primary tracking-tight">Partner Insurance Carriers</h2>
+              <p className="mt-1 text-small text-text-secondary">
+                Registered health insurance providers offering policy options.
+              </p>
+            </div>
+            <NavLink to="/providers">
+              <Button variant="outline" size="sm">
+                View All Carriers
+              </Button>
+            </NavLink>
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {CARRIERS.map((carrier) => (
+              <div key={carrier.name} className="rounded-lg border border-border p-4 bg-background">
+                <h3 className="font-semibold text-text-primary text-small mb-1">{carrier.name}</h3>
+                <p className="text-caption text-text-secondary">{carrier.category}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+};
+
+export default Dashboard;
