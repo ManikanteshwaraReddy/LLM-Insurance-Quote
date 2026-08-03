@@ -6,6 +6,7 @@ import { Progress } from "@/components/ui/progress";
 import { Send, Download, Bot, User } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { NavLink } from "react-router-dom";
+import { getQuote } from "@/lib/api";
 
 const ChatPage = () => {
   const { register, handleSubmit, reset } = useForm();
@@ -38,71 +39,31 @@ const ChatPage = () => {
   });
   
   // Add state for quote data
+  const formDataRef = useRef(formData);
   const [quoteData, setQuoteData] = useState(null);
+  const [quoteError, setQuoteError] = useState(null);
+  const [isGeneratingQuote, setIsGeneratingQuote] = useState(false);
 
   const getQuotation = async () => {
-    console.log("Generating quotation with data:", formData);
-    
     try {
-      // For now, return a mock quote - replace with actual API call
-      // TODO: Replace with actual backend integration
-      const mockQuote = {
-        quote_id: `quote_${Date.now()}`,
-        plan: {
-          name: "Comprehensive Health Plus",
-          monthly_premium: 285.00,
-          annual_deductible: 1500,
-          out_of_pocket_max: 5000,
-          coverage_type: "comprehensive",
-          network_type: "PPO"
-        },
-        benefits: [
-          "Primary care visits: $25 copay",
-          "Specialist visits: $50 copay", 
-          "Emergency room: $250 copay",
-          "Hospital stay: 20% coinsurance after deductible",
-          "Mental health services: $25 copay",
-          "Prescription drugs: Tier 1-3 coverage"
-        ],
-        recommendations: [
-          "This plan offers comprehensive coverage suitable for your profile",
-          "Consider the moderate deductible with good out-of-pocket protection"
-        ],
-        confidence_score: 0.85
-      };
-      
-      // Simulate API call delay
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
-      console.log("Generated quote:", mockQuote);
-      return mockQuote;
-      
+      setQuoteError(null);
+      setIsGeneratingQuote(true);
+      const { age, medicalHistory, lifestyle, coverageNeed } = formDataRef.current;
+      const quote = await getQuote({
+        age: Number(age),
+        medicalHistory,
+        lifestyle,
+        coverageNeed,
+      });
+      setQuoteData(quote);
+      setShowQuote(true);
     } catch (error) {
-      console.error("Error generating quote:", error);
-      // Return fallback quote on error
-      return {
-        quote_id: `fallback_${Date.now()}`,
-        plan: {
-          name: "Standard Health Plan",
-          monthly_premium: 250.00,
-          annual_deductible: 2000,
-          out_of_pocket_max: 6000,
-          coverage_type: "standard",
-          network_type: "PPO"
-        },
-        benefits: [
-          "Primary care visits: $30 copay",
-          "Preventive care: Covered 100%",
-          "Emergency room: $300 copay"
-        ],
-        recommendations: [
-          "This is a fallback quote - please try again for personalized results"
-        ],
-        confidence_score: 0.6
-      };
+      setQuoteError(error.message || "Unable to generate a quote. Please try again.");
+    } finally {
+      setIsGeneratingQuote(false);
     }
   };
-  
+
   const updateStageCompletion = (stageIndex) => {
     setStages((prevStages) =>
       prevStages.map((stage, index) =>
@@ -135,10 +96,11 @@ const ChatPage = () => {
     setMessages((prev) => [...prev, userMessage]);
 
     if (currentQuestionKey) {
-      setFormData((prevData) => ({
-        ...prevData,
-        [currentQuestionKey]: userContent,
-      }));
+      setFormData((prevData) => {
+        const updatedData = { ...prevData, [currentQuestionKey]: userContent };
+        formDataRef.current = updatedData;
+        return updatedData;
+      });
       setCurrentQuestionKey(null);
     }
 
@@ -203,9 +165,7 @@ const ChatPage = () => {
           );
           updateStageCompletion(4);
           setTimeout(async () => {
-            const quote = await getQuotation();
-            setQuoteData(quote);
-            setShowQuote(true);
+            await getQuotation();
           }, 2000);
         }
       }
@@ -305,7 +265,19 @@ const ChatPage = () => {
               </div>
             ))}
           </div>
-
+          {isGeneratingQuote && (
+            <p className="mb-4 text-center text-sm text-blue-700 dark:text-blue-400">
+              Contacting the quote service...
+            </p>
+          )}
+          {quoteError && (
+            <div className="mb-4 rounded-lg border border-red-200 bg-red-50 p-3 text-center text-sm text-red-700 dark:border-red-900 dark:bg-red-950 dark:text-red-300">
+              <p>{quoteError}</p>
+              <Button variant="outline" size="sm" className="mt-2" onClick={getQuotation} disabled={isGeneratingQuote}>
+                Try again
+              </Button>
+            </div>
+          )}
           <form onSubmit={handleSubmit(onSubmit)} className="flex gap-2">
             <Input
               {...register("message")}
@@ -330,72 +302,20 @@ const ChatPage = () => {
 
           <div className="bg-blue-50 p-4 rounded-lg mb-6 dark:bg-blue-950">
             <h3 className="text-xl font-semibold text-blue-900 mb-3 dark:text-blue-400">
-              Recommended Plan: {quoteData?.plan?.name || "Comprehensive Health Plus"}
+              Estimated Health Insurance Premium
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <p>
-                  <strong>Monthly Premium:</strong> ${quoteData?.plan?.monthly_premium || "285.00"}
-                </p>
-                <p>
-                  <strong>Annual Deductible:</strong> ${quoteData?.plan?.annual_deductible || "1,500"}
-                </p>
-                <p>
-                  <strong>Out-of-pocket Maximum:</strong> ${quoteData?.plan?.out_of_pocket_max || "5,000"}
-                </p>
+                <p><strong>Selected payment amount:</strong> INR {quoteData?.totalPayableINR?.toLocaleString("en-IN")}</p>
+                <p><strong>Yearly:</strong> INR {quoteData?.yearlyINR?.toLocaleString("en-IN")}</p>
+                <p><strong>Half-yearly:</strong> INR {quoteData?.halfYearlyINR?.toLocaleString("en-IN")}</p>
               </div>
               <div>
-                <p>
-                  <strong>Coverage Type:</strong> {quoteData?.plan?.coverage_type || "Comprehensive"}
-                </p>
-                <p>
-                  <strong>Network Type:</strong> {quoteData?.plan?.network_type || "PPO"}
-                </p>
-                <p>
-                  <strong>Quote ID:</strong> {quoteData?.quote_id || "N/A"}
-                </p>
+                <p><strong>Quarterly:</strong> INR {quoteData?.quarterlyINR?.toLocaleString("en-IN")}</p>
+                <p><strong>Monthly:</strong> INR {quoteData?.monthlyINR?.toLocaleString("en-IN")}</p>
               </div>
             </div>
-            {quoteData?.confidence_score && (
-              <div className="mt-3 text-sm text-gray-600 dark:text-gray-400">
-                <strong>Confidence Score:</strong> {Math.round(quoteData.confidence_score * 100)}%
-              </div>
-            )}
           </div>
-
-          <div className="mb-6">
-            <h3 className="text-lg font-semibold text-blue-900 mb-3 dark:text-blue-400">
-              Plan Benefits
-            </h3>
-            <ul className="list-disc pl-5 space-y-1 text-gray-700 dark:text-gray-300">
-              {quoteData?.benefits?.map((benefit, index) => (
-                <li key={index}>{benefit}</li>
-              )) || (
-                <>
-                  <li>Primary care visits: $25 copay</li>
-                  <li>Specialist visits: $50 copay</li>
-                  <li>Emergency room: $250 copay (waived if admitted)</li>
-                  <li>Hospital stay: 20% coinsurance after deductible</li>
-                  <li>Mental health services: $25 copay</li>
-                  <li>Preventive care: Covered 100%</li>
-                </>
-              )}
-            </ul>
-          </div>
-
-          {quoteData?.recommendations && quoteData.recommendations.length > 0 && (
-            <div className="mb-6">
-              <h3 className="text-lg font-semibold text-blue-900 mb-3 dark:text-blue-400">
-                Recommendations
-              </h3>
-              <ul className="list-disc pl-5 space-y-1 text-gray-700 dark:text-gray-300">
-                {quoteData.recommendations.map((rec, index) => (
-                  <li key={index}>{rec}</li>
-                ))}
-              </ul>
-            </div>
-          )}
-
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <NavLink to={'/print'}>
             <Button className="bg-blue-600 hover:bg-blue-700">
@@ -406,14 +326,14 @@ const ChatPage = () => {
 
           <div className="mt-8 pt-6 border-t border-gray-200 text-center dark:border-gray-800">
             <p className="text-gray-600 mb-4 dark:text-gray-400">
-              This quote can be used for negotiations with insurance brokers.
+              This is an estimated premium. Confirm final coverage and terms with an insurance provider.
             </p>
             <NavLink to="/providers">
               <Button
                 variant="link"
                 className="text-blue-700 dark:text-blue-400"
               >
-                View Insurance Providers →
+                View Insurance Providers ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢
               </Button>
             </NavLink>
           </div>
