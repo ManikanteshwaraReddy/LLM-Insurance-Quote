@@ -9,36 +9,46 @@ import { Spinner } from "@/components/ui/spinner";
 import { getQuote } from "@/lib/api";
 
 const questions = [
-  { key: "age", prompt: "How old are you?", inputMode: "numeric" },
-  { key: "gender", prompt: "Which gender should we use for this quote?", options: ["Male", "Female", "Other"] },
+  // 1. Personal Details
+  { key: "age", prompt: "What is your age?", inputMode: "numeric" },
+  { key: "gender", prompt: "What is your biological sex?", options: ["Male", "Female"] },
+  { key: "heightCm", prompt: "What is your height in centimeters?", inputMode: "numeric" },
+  { key: "weightKg", prompt: "What is your weight in kilograms?", inputMode: "numeric" },
   { key: "location", prompt: "Which city do you live in?" },
-  { key: "occupation", prompt: "What is your occupation?" },
-  { key: "numberOfInsuredMembers", prompt: "How many people should this policy cover?", options: ["1", "2", "3", "4", "5"] },
-  { key: "familyDetails", prompt: "Briefly describe the family members to be covered." },
-  { key: "preExistingConditions", prompt: "Do you have any pre-existing health conditions? (Enter None if inapplicable)" },
-  { key: "pastMedicalHistory", prompt: "Is there any past medical history we should consider?" },
-  { key: "familyMedicalHistory", prompt: "Is there any relevant family medical history?" },
-  { key: "heightCm", prompt: "What is your height in centimetres?", inputMode: "decimal" },
-  { key: "weightKg", prompt: "What is your weight in kilograms?", inputMode: "decimal" },
-  { key: "pregnancyStatus", prompt: "Is pregnancy coverage relevant to this quote?", options: ["No", "Yes", "Not applicable"] },
-  { key: "smokingTobaccoUse", prompt: "Do you use tobacco or smoke?", options: ["No", "Occasional", "Yes"] },
-  { key: "alcoholConsumption", prompt: "How often do you consume alcohol?", options: ["Never", "Occasional", "Regular"] },
-  { key: "exerciseFrequency", prompt: "How often do you exercise?", options: ["Sedentary", "1-2 times/week", "3-4 times/week", "Daily"] },
-  { key: "lifestyle", prompt: "How would you describe your overall lifestyle?" },
-  { key: "coverageNeed", prompt: "What are your primary coverage needs?" },
-  { key: "planType", prompt: "Would you like an individual or family plan?", options: ["Individual", "Family"] },
-  { key: "sumInsured", prompt: "What sum insured would you like in INR?", options: ["300000", "500000", "1000000", "2000000"] },
-  { key: "policyTermYears", prompt: "What policy term do you prefer?", options: ["1", "2", "3"] },
-  { key: "premiumPaymentMode", prompt: "How would you prefer to pay your premium?", options: ["Monthly", "Quarterly", "Half-Yearly", "Yearly"] },
+  { key: "occupation", prompt: "What best describes your occupation?", options: ["Salaried", "Self-Employed", "Business Owner", "Student", "Homemaker", "Retired", "Other"] },
+  
+  // 2. Coverage & Family
+  { key: "planType", prompt: "Are you looking for an individual or family health plan?", options: ["Individual", "Family"] },
+  { key: "numberOfInsuredMembers", prompt: "How many people will be covered under this policy?", options: ["1", "2", "3", "4", "5", "6+"] },
+  { key: "familyDetails", prompt: "Who else is included in this coverage? (e.g., Spouse and 2 children)", options: ["Spouse", "Children", "Parents", "Parents-in-law", "Extended Family", "Other"] },
+  
+  // 3. Medical History
+  { key: "preExistingConditions", prompt: "Do you have any pre-existing medical conditions?", options: ["None", "Diabetes", "Hypertension", "Asthma/Respiratory", "Thyroid", "Heart Condition", "Other"] },
+  { key: "pastMedicalHistory", prompt: "Have you undergone any major surgeries or hospitalizations in the past 5 years?", options: ["No", "Yes - Minor Surgery", "Yes - Major Surgery", "Yes - Medical Illness", "Other"] },
+  { key: "familyMedicalHistory", prompt: "Is there a history of chronic illnesses in your immediate family?", options: ["No", "Diabetes", "Heart Disease", "Cancer", "Hypertension", "Other"] },
+  { key: "pregnancyStatus", prompt: "Are you currently expecting, or planning for maternity coverage?", options: ["No", "Yes - Currently Expecting", "Yes - Planning for Future", "Not Applicable"] },
+
+  // 4. Lifestyle
+  { key: "smokingTobaccoUse", prompt: "Do you currently smoke or use tobacco products?", options: ["Never Smoked", "Occasional/Social", "Regular Smoker", "Past Smoker"] },
+  { key: "alcoholConsumption", prompt: "How often do you consume alcohol?", options: ["Never", "Occasional/Social", "Moderate", "Heavy"] },
+  { key: "exerciseFrequency", prompt: "How often do you engage in physical activity?", options: ["Sedentary", "1-2 times/week", "3-4 times/week", "Daily"] },
+  { key: "lifestyle", prompt: "How would you rate your overall stress level and lifestyle?", options: ["Relaxed & Healthy", "Moderate Stress", "High Stress/Demanding", "Sedentary"] },
+
+  // 5. Policy Preferences
+  { key: "coverageNeed", prompt: "What is your primary goal for this health insurance?", options: ["Comprehensive Coverage", "Critical Illness Protection", "Maternity Benefits", "Senior Citizen Care", "Top-Up/Super Top-Up", "Other"] },
+  { key: "sumInsured", prompt: "What coverage amount (Sum Insured) are you looking for?", options: ["₹3 Lakhs", "₹5 Lakhs", "₹10 Lakhs", "₹20 Lakhs", "₹50 Lakhs+"] },
+  { key: "policyTermYears", prompt: "What is your preferred policy duration?", options: ["1 Year", "2 Years", "3 Years"] },
+  { key: "premiumPaymentMode", prompt: "How would you prefer to pay your premium?", options: ["Annually", "Half-Yearly", "Quarterly", "Monthly"] },
 ];
 
-const stages = ["Basic Info", "Health History", "Lifestyle", "Coverage Needs"];
+const stages = ["Personal", "Family", "Health", "Lifestyle", "Coverage"];
 
 const stageForQuestion = (questionIndex) => {
-  if (questionIndex < 5) return 0;
-  if (questionIndex < 12) return 1;
-  if (questionIndex < 17) return 2;
-  return 3;
+  if (questionIndex < 6) return 0;
+  if (questionIndex < 9) return 1;
+  if (questionIndex < 13) return 2;
+  if (questionIndex < 17) return 3;
+  return 4;
 };
 
 const initialFormData = Object.fromEntries(questions.map(({ key }) => [key, ""]));
@@ -142,13 +152,22 @@ const FullQuoteChat = () => {
     const weightKg = Number(data.weightKg);
     const bmi = heightCm > 0 && weightKg > 0 ? Number((weightKg / ((heightCm / 100) ** 2)).toFixed(1)) : undefined;
 
+    const parseSumInsured = (val) => {
+      if (val === "₹3 Lakhs") return 300000;
+      if (val === "₹5 Lakhs") return 500000;
+      if (val === "₹10 Lakhs") return 1000000;
+      if (val === "₹20 Lakhs") return 2000000;
+      if (val === "₹50 Lakhs+") return 5000000;
+      return Number(val) || 500000;
+    };
+
     return {
       age: Number(data.age),
       medicalHistory: data.pastMedicalHistory,
       gender: data.gender,
       location: data.location,
       occupation: data.occupation,
-      numberOfInsuredMembers: Number(data.numberOfInsuredMembers),
+      numberOfInsuredMembers: parseInt(data.numberOfInsuredMembers) || 1,
       familyDetails: data.familyDetails,
       preExistingConditions: data.preExistingConditions,
       pastMedicalHistory: data.pastMedicalHistory,
@@ -163,8 +182,8 @@ const FullQuoteChat = () => {
       lifestyle: data.lifestyle,
       coverageNeed: data.coverageNeed,
       planType: data.planType,
-      sumInsured: Number(data.sumInsured),
-      policyTermYears: Number(data.policyTermYears),
+      sumInsured: parseSumInsured(data.sumInsured),
+      policyTermYears: parseInt(data.policyTermYears) || 1,
       premiumPaymentMode: data.premiumPaymentMode,
     };
   };
@@ -258,7 +277,17 @@ const FullQuoteChat = () => {
                             key={option}
                             variant="outline"
                             size="sm"
-                            onClick={() => handleUserMessage(option)}
+                            onClick={() => {
+                              if (option.endsWith("Other")) {
+                                if (inputRef.current) {
+                                  inputRef.current.value = "";
+                                  inputRef.current.placeholder = "Please specify...";
+                                  inputRef.current.focus();
+                                }
+                              } else {
+                                handleUserMessage(option);
+                              }
+                            }}
                           >
                             {option}
                           </Button>
