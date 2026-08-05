@@ -43,16 +43,16 @@ const Dashboard = () => {
                 Complete a brief health assessment to receive personalized policy estimates and compare coverage options from leading insurance carriers.
               </p>
 
-              <div className="flex flex-wrap items-center gap-4 pt-2">
-                <NavLink to="/chat">
-                  <Button size="lg" className="gap-2 font-semibold text-white">
+              <div className="flex flex-col sm:flex-row flex-wrap sm:items-center gap-4 pt-2">
+                <NavLink to="/chat" className="w-full sm:w-auto">
+                  <Button size="lg" className="gap-2 font-semibold text-white w-full sm:w-auto">
                     <span className="text-white">Start Health Assessment</span>
                     <ArrowRight className="h-4 w-4 text-white" aria-hidden="true" />
                   </Button>
                 </NavLink>
 
-                <NavLink to="/providers">
-                  <Button size="lg" variant="outline">
+                <NavLink to="/providers" className="w-full sm:w-auto">
+                  <Button size="lg" variant="outline" className="w-full sm:w-auto">
                     Browse Insurance Providers
                   </Button>
                 </NavLink>
@@ -123,8 +123,8 @@ const Dashboard = () => {
                 Registered health insurance providers offering policy options.
               </p>
             </div>
-            <NavLink to="/providers">
-              <Button variant="outline" size="sm">
+            <NavLink to="/providers" className="w-full sm:w-auto">
+              <Button variant="outline" size="sm" className="w-full sm:w-auto">
                 View All Carriers
               </Button>
             </NavLink>

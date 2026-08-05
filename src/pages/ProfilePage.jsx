@@ -160,7 +160,7 @@ const ProfilePage = () => {
             </div>
           </div>
 
-          <Button variant="outline" size="sm" onClick={handleLogout} className="gap-2">
+          <Button variant="outline" size="sm" onClick={handleLogout} className="gap-2 w-full sm:w-auto">
             <LogOut className="h-4 w-4" /> Sign Out
           </Button>
         </div>
@@ -257,11 +257,11 @@ const ProfilePage = () => {
                     </div>
                   </div>
 
-                  <div className="flex items-center justify-end gap-3 pt-4 border-t border-border">
-                    <Button variant="outline" type="button" onClick={() => setIsEditingProfile(false)}>
+                  <div className="flex flex-col-reverse sm:flex-row sm:items-center justify-end gap-3 pt-4 border-t border-border">
+                    <Button variant="outline" type="button" onClick={() => setIsEditingProfile(false)} className="w-full sm:w-auto">
                       Cancel
                     </Button>
-                    <Button type="submit" disabled={profileSaving}>
+                    <Button type="submit" disabled={profileSaving} className="w-full sm:w-auto">
                       {profileSaving ? "Saving..." : "Save Changes"}
                     </Button>
                   </div>
@@ -326,7 +326,7 @@ const ProfilePage = () => {
                   <PasswordInput id="confirmPassword" name="confirmPassword" required />
                 </div>
 
-                <Button type="submit" disabled={pwSaving}>
+                <Button type="submit" disabled={pwSaving} className="w-full sm:w-auto mt-2">
                   {pwSaving ? "Updating Password..." : "Update Password"}
                 </Button>
               </form>
