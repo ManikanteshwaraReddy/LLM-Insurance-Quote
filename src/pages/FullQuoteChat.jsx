@@ -209,8 +209,31 @@ const FullQuoteChat = () => {
     }
 
     const currentQuestion = questions[questionIndex];
-    formDataRef.current = { ...formDataRef.current, [currentQuestion.key]: answer };
-    const nextIndex = questionIndex + 1;
+    let newData = { ...formDataRef.current, [currentQuestion.key]: answer };
+
+    // Auto-fill dependent fields to skip
+    if (currentQuestion.key === "planType" && answer === "Individual") {
+      newData.numberOfInsuredMembers = "1";
+      newData.familyDetails = "None";
+    } else if (currentQuestion.key === "numberOfInsuredMembers" && answer === "1") {
+      newData.familyDetails = "None";
+    } else if (currentQuestion.key === "gender" && answer === "Male") {
+      newData.pregnancyStatus = "Not Applicable";
+    }
+
+    formDataRef.current = newData;
+
+    let nextIndex = questionIndex + 1;
+    while (nextIndex < questions.length) {
+      const nextQuestion = questions[nextIndex];
+      let shouldAsk = true;
+      if (nextQuestion.key === "numberOfInsuredMembers" && newData.planType === "Individual") shouldAsk = false;
+      if (nextQuestion.key === "familyDetails" && (newData.planType === "Individual" || newData.numberOfInsuredMembers === "1")) shouldAsk = false;
+      if (nextQuestion.key === "pregnancyStatus" && newData.gender === "Male") shouldAsk = false;
+
+      if (shouldAsk) break;
+      nextIndex++;
+    }
 
     if (nextIndex < questions.length) {
       askQuestion(nextIndex);
