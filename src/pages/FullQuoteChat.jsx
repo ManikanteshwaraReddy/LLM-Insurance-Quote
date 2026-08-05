@@ -422,7 +422,7 @@ const FullQuoteChat = () => {
             </div>
 
             <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 border-t border-border">
-              <NavLink to="/print">
+              <NavLink to="/print" state={{ quoteData, userDetails: formDataRef.current }}>
                 <Button variant="secondary" className="gap-2">
                   <Download className="h-4 w-4" /> Download Quote Summary
                 </Button>
