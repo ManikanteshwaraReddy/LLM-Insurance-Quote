@@ -1,6 +1,7 @@
 import { NavLink } from "react-router-dom";
-import { ArrowRight, Clock, MessageSquare, ShieldCheck } from "lucide-react";
+import { ArrowRight, Clock, MessageSquare, ShieldCheck, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { providers } from "@/data/providersData";
 
 const STEPS = [
   {
@@ -18,13 +19,6 @@ const STEPS = [
     title: "Compare & Connect",
     description: "Review your policy breakdown, choose a payment schedule, and connect with registered insurance providers.",
   },
-];
-
-const CARRIERS = [
-  { name: "HDFC ERGO Health", category: "Comprehensive & Super Top-up" },
-  { name: "Star Health Insurance", category: "Family Floater & Senior Care" },
-  { name: "Care Health Insurance", category: "Critical Illness & Global Care" },
-  { name: "Niva Bupa Health", category: "Individual & Maternity Cover" },
 ];
 
 const Dashboard = () => {
@@ -131,12 +125,33 @@ const Dashboard = () => {
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {CARRIERS.map((carrier) => (
-              <div key={carrier.name} className="rounded-lg border border-border p-4 bg-background">
-                <h3 className="font-semibold text-text-primary text-small mb-1">{carrier.name}</h3>
-                <p className="text-caption text-text-secondary">{carrier.category}</p>
-              </div>
-            ))}
+            {providers.slice(0, 4).map((provider) => {
+              const IconComponent = provider.icon;
+              return (
+                <div key={provider.id} className="rounded-lg border border-border p-4 bg-background flex flex-col justify-between">
+                  <div>
+                    <div className="flex items-center gap-2 mb-2">
+                      {IconComponent && <IconComponent className="h-4 w-4 text-primary shrink-0" />}
+                      <h3 className="font-semibold text-text-primary text-small line-clamp-1" title={provider.title}>
+                        {provider.title}
+                      </h3>
+                    </div>
+                    <p className="text-caption text-text-secondary line-clamp-2 mb-3">
+                      {provider.description}
+                    </p>
+                  </div>
+                  <a
+                    href={provider.website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 text-caption text-primary hover:underline font-medium"
+                  >
+                    <span>Visit Website</span>
+                    <ExternalLink className="h-3 w-3" />
+                  </a>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
